@@ -44,10 +44,6 @@ import UntarPackage
 # for `UNTARRING` of compressed files.
 import tarfile
 
-# Perform `FILE / DIRECTORY` related operations easily with the below Standard Library Module
-# that comes with `PYTHON`.
-import shutil
-
 # Having trouble with `shutil`, hence bringing in the ever reliable `subprocess` module.
 import subprocess
 
@@ -166,7 +162,7 @@ class TomcatAutomate(Automate):
 
 	# <::PROTECTED_MEMBER_METHOD::>
 	@classmethod
-	def _copy_binary(cls, source_location, destination_location, extracted_binary_name):
+	def _copy_binary(cls, source_location, destination_location, extracted_binary_name, extracted_binary_identifier):
 		try:
 			# Check to see if the binary destination exists.
 			# If not, create it before initiating the copy.
@@ -198,65 +194,14 @@ class TomcatAutomate(Automate):
 			# and make calls to directory creation utilities (platform specific) or language enabled functions,
 			# iff multiple levels of directory setup are required (p.s. that might require code change).
 			cp_command = (OS_COPY_DIRECTIVE + WHITE_SPACE_SEPERATOR + os.path.join(source_location, extracted_binary_name) +
-								WHITE_SPACE_SEPERATOR + os.path.join(destination_location, extracted_binary_name))
+								WHITE_SPACE_SEPERATOR + os.path.join(destination_location, extracted_binary_identifier))
 			subprocess.check_call(cp_command, shell=True)
 
 			# Logging a comment.
 			build_supervisor_logger.info('Copy Operation Successful')
-		except (shutil.Error, subprocess.CalledProcessError, OSError) as copyBinary_error:
+		except (subprocess.CalledProcessError, OSError) as copyBinary_error:
 			# Put logging below.
 			build_supervisor_logger.error('ERROR::BUILD_SUPERVISOR::COPY_BINARY_FAILED::' + str(copyBinary_error))
-			raise
-
-	# <::PROTECTED_MEMBER_METHOD::>
-	@staticmethod
-	def _create_profile(environment_profile_for, profile_file_name, tomcat_profile_version='current', java_profile_version='current'):
-		# Start the `PROFILE` file creation for the appropriate binary installation.
-		try:
-			# Logging a comment.
-			build_supervisor_logger.info('Creating the *' + environment_profile_for + '* profile file')
-
-			with open(profile_file_name, 'wt') as profile_file_obj:
-				if environment_profile_for == BuildConfig.Tomcat.TomcatConfig.ENVIRONMENT['BUILD_TARGET']:
-					# Opens a file to write the `TOMCAT` profile.
-					# `TOMCAT` uses the below profile for setting up its environment
-					# during startup, i.e., which version of `JRE/JDK` to use.
-
-					# Setup the `TOMCAT` profile.
-					# This file is loaded when `TOMCAT` starts.
-					# Loads the environment settings for the currently invoked `TOMCAT` installation.
-
-					# The below `PROFILE` file properties, need to be updated
-					# as per your environment requirements. It is useful, when
-					# you have multiple versions of `TOMCAT`, running different versions
-					# of `JRE/JDK`, depending on the applications present in the shared application
-					# farm. In our environment, we use the below directory convention
-					# for our `TOMCAT` & `JRE` setup.
-					profile_file_obj.write('##\n## TOMCAT PROFILE\n##\n\n')
-					profile_file_obj.write('. /opt/jdk/' + java_profile_version + '/jdkprofile\n\n')
-					profile_file_obj.write('CATALINA_HOME=/opt/tomcat/' + tomcat_profile_version + '\n')
-					profile_file_obj.write('PATH=$CATALINA_HOME/bin:/opt/Documentum/Shared/dfc:$PATH\n')
-					profile_file_obj.write('DISPLAY=0.0\n\n')
-					profile_file_obj.write('export CATALINA_HOME PATH DISPLAY\n')
-				elif environment_profile_for == BuildConfig.Java.JavaConfig.ENVIRONMENT['BUILD_TARGET']:
-					# Setup the `JAVA` profile file.
-					# It loads the environment settings for the specific `JAVA` version,
-					# that an application is compatible with. It is loaded when `TOMCAT`
-					# starts an application instance by invoking this profile file.
-					# Loading this profile will affect the current shell session and the
-					# environment settings for any of its child processes.
-					profile_file_obj.write('##\n## JAVA PROFILE\n##\n\n')
-					profile_file_obj.write('JAVA_HOME=/opt/jdk/' + java_profile_version + '\n\n')
-					profile_file_obj.write('PATH=$JAVA_HOME/jre/bin:$JAVA_HOME/bin:/opt/Documentum/Shared/dfc:$PATH\n\n')
-					profile_file_obj.write('export JAVA_HOME PATH\n')
-
-			# Logging a comment.
-			build_supervisor_logger.info('Profile: {' + profile_file_name + '} created for: {' +
-											environment_profile_for + '}')
-		except (IOError, OSError) as createProfile_error:
-			# Put logging below.
-			build_supervisor_logger.error('ERROR::BUILD_SUPERVISOR::CREATE' + environment_profile_for + 'PROFILE_FAILED::' +
-									str(createProfile_error))
 			raise
 
 	# Utility / Helper for getting the extracted binaries' names.
@@ -396,39 +341,17 @@ class TomcatAutomate(Automate):
 			cls._copy_binary(source_location=(BuildConfig.Untar.UntarConfig.TAR_BASE_EXTRACT_DIRECTORY +
 									BuildConfig.Tomcat.TomcatConfig.TOMCAT_TAR_EXTRACT_PACKAGE_TYPE_LOCATION),
 							destination_location=BuildConfig.Tomcat.TomcatConfig.TOMCAT_BINARY_LOCATION,
-						extracted_binary_name=tar_extract_names[BuildConfig.Tomcat.TomcatConfig.TOMCAT_TAR_EXTRACT_COMPONENT_NAME])
+					extracted_binary_name=tar_extract_names[BuildConfig.Tomcat.TomcatConfig.TOMCAT_TAR_EXTRACT_COMPONENT_NAME],
+					extracted_binary_identifier=tomcat_binary_version)
 
 			# Copy the `JAVA` binary to the standard location.
 			cls._copy_binary(source_location=(BuildConfig.Untar.UntarConfig.TAR_BASE_EXTRACT_DIRECTORY +
 									BuildConfig.Java.JavaConfig.JAVA_TAR_EXTRACT_PACKAGE_TYPE_LOCATION),
 							destination_location=BuildConfig.Java.JavaConfig.JAVA_BINARY_LOCATION,
-							extracted_binary_name=tar_extract_names[BuildConfig.Java.JavaConfig.JAVA_TAR_EXTRACT_COMPONENT_NAME])
-		except (shutil.Error, OSError) as buildSupervisor_tomcatAutomate_initiateBuildWorkflow_copyBinary_error:
+					extracted_binary_name=tar_extract_names[BuildConfig.Java.JavaConfig.JAVA_TAR_EXTRACT_COMPONENT_NAME],
+					extracted_binary_identifier=java_binary_version)
+		except OSError as buildSupervisor_tomcatAutomate_initiateBuildWorkflow_copyBinary_error:
 			# Put logging below.
 			build_supervisor_logger.error('ERROR::BUILD_SUPERVISOR::INITIATE_BUILD_WORKFLOW::COPY_BINARY_FAILED::' +
 						str(buildSupervisor_tomcatAutomate_initiateBuildWorkflow_copyBinary_error))
-			raise
-
-		# The below sets up the `TOMCAT` profile file for the installation / setup.
-		# Not actually required, depends from project to project.
-		# You may omit it out, if multiple versions of `TOMCAT` or `JAVA` isn't running on the
-		# same node.
-		try:
-			# Create the `TOMCAT` profile file.
-			cls._create_profile(cls.build_environment['BUILD_TARGET'],
-									(BuildConfig.Tomcat.TomcatConfig.TOMCAT_BINARY_LOCATION +
-											tar_extract_names[BuildConfig.Tomcat.TomcatConfig.TOMCAT_TAR_EXTRACT_COMPONENT_NAME] +
-													'/' + BuildConfig.Tomcat.TomcatConfig.TOMCAT_PROFILE_FILE_NAME),
-										tomcat_binary_version, java_binary_version)
-
-			# Create the `JAVA` profile file.
-			cls._create_profile(BuildConfig.Java.JavaConfig.ENVIRONMENT['BUILD_TARGET'],
-									(BuildConfig.Java.JavaConfig.JAVA_BINARY_LOCATION +
-										tar_extract_names[BuildConfig.Java.JavaConfig.JAVA_TAR_EXTRACT_COMPONENT_NAME] +
-											'/' + BuildConfig.Java.JavaConfig.JAVA_PROFILE_FILE_NAME),
-										java_profile_version=java_binary_version)
-		except (IOError, OSError) as buildSupervisor_tomcatAutomate_initiateBuildWorkflow_createProfile_error:
-			# Put logging below.
-			build_supervisor_logger.error('ERROR::BUILD_SUPERVISOR::INITIATE_BUILD_WORKFLOW::CREATE_PROFILE_FAILED::' +
-						str(buildSupervisor_tomcatAutomate_initiateBuildWorkflow_createProfile_error))
 			raise
