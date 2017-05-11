@@ -50,7 +50,7 @@ further optimized accordingly.
 - [x] No manual setup required.
 - [x] Saves ample time for performing other important infrastrucutre tasks (Automation makes it `Super Fast!!!`).
 - [x] Eliminating Human Errors.
-- [x] No expertise required t perform the task (i.e., the downloading and extracting of the required binaries).
+- [x] No expertise required to perform the task (i.e., the downloading and extracting of the required binaries).
 - [x] More time to relax and chill!!!
 
 ## What I Gain?
