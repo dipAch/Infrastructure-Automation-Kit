@@ -18,5 +18,5 @@ Summary:  This is the Supervisor script that controls the `AUTO_BUILD` processes
 # Please do not pollute the entire file with imports here and there.
 ###################################################################################
 
-# Get the `BUILD_SUPERVISOR` Abstract Base Class.
-import helpers.BuildSupervisor
+# Automation Workflow Stitching Script. Customize to cater your needs.
+# Happy Coding!!!
