@@ -1,11 +1,13 @@
-# Magical-Tomcat-Installer
-This is the Magical Tomcat Downloader &amp; Installer. Finds and downloads the latest Tomcat binary and also its dependencies (i.e., latest JDK/JRE).
+# Infrastructure-Automation-Kit
+This is the Magical Automation Kit for Downloading, Building (i.e., Configuring and Compiling) and Installing the latest Apache `HTTPD` and `TOMCAT` packages. This utility also manages the dependencies (for eg., latest `JDK/JRE` for `TOMCAT`) required by the actual software(s). This is a complete suite that offers Infrastructure Setup for Reverse-Proxies and Application Servers (currently, `HTTPD` and `TOMCAT` respectively, but not limited to) without any hassle and manages the tricky aspects for you.
 
 ## The Problem
-My Organization heavily deploys applications on `Tomcat` servers. We have a fleet of application servers that are Tomcat (plus some other) and it has been so for many many years. Tomcat is reliable and has an active development history. Also, Tomcat is very secure and stable when used in an Enterprise setup. It can handle a good load of traffic and performs very well with proper resource utilization.
+My Organization heavily deploys applications on `Tomcat` servers. We have a fleet of application servers that are Tomcat and it has been so for many many years. Tomcat is reliable and has an active development history. Also, Tomcat is very secure and stable when used in an Enterprise setup. It can handle a good load of traffic and performs very well with when configured appropriately.
 
-So as part of the __Enterprise Infrastructure Team__, our job is to provision more and more Tomcat servers, for deploying the ever
-increasing number of applications, both customer facing and internally used ones or even web services, etc.
+The same goes for our Reverse-Proxy Infrastructure. We use Apache `HTTPD` to handle our Reverse-Proxy tier and Building Apache `HTTPD`
+and its dependencies is no easy task. It is time consuming and requires a good knowledge of Building Software from source. Basically, if you are doing it for the first time, you are bound to find challenges while building it and also probably fail.
+
+So as part of the __Enterprise Infrastructure Team__, our job is to provision more and more Tomcat servers and Reverse-Proxy instances, for deploying the ever increasing number of applications, both customer facing and internally used ones or even web services, etc.
 
 ## Manual Setup
 When performing the installation and setup manualy, it takes up a good amount of time and every time we are performing the exact same
