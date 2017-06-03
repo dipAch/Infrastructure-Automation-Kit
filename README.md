@@ -21,13 +21,13 @@ Sounds like a task requiring Automation?!
 To avoid this repetition at work, I came up with an utility that performs the necessary checks and steps without any human intervention
 and thus increases productivity by saving time wasted on the process of downloading/installing and setting up the infrastructure part.
 
-All that is required now, is to run this utility with configurations correctly set, because that is what the utility listens to
-and let it do its __`magic`__.
+All that is required now, is to run this utility with configurations correctly set, because that is what the utility listens to.
+Define the configurations once, and let the utility do its __`magic`__.
 
 No need to manually indulge on doing the same on multiple servers, and thus less prone to human errors and also it enables us to keep
 better track of the entire setup process and can be easily standardized across the various towers or domains.
 
-The most important entity that one gains is, it saves a lot of __time__. What manually would have taken ~10-15 mins, can now be done in just a matter of seconds. Time is an important factor in the Enterprise Setup, because __`Time is Money and Money is Time`__.
+The most important entity that one gains is, it saves a lot of __time__. What manually would have taken ~10-15 mins, can now be done in just a matter of seconds (at max. a few minutes, Network Latency you know!!!). Time is an important factor in the Enterprise Setup, because __`Time is Money and Money is Time`__.
 
 ## How to Use
 Most of the customizations can be handled by configuring the settings defined in the configuration files. Please make sure to change the
