@@ -14,6 +14,9 @@ When performing the installation and setup manualy, it takes up a good amount of
 set of steps. So, imagine we have to setup 100 such Tomcat instances. Yeah...right, that's gonna take a lot of time.
 As part of the setup, we will also need to download and install the appropriate `JDK/JRE` required by the applications to be deployed.
 
+For the Reverse-Proxy Instances it is even more cumbersome to go through the entire Configure, Build / Compile and Install process for the `HTTPD` Software and its dependencies.
+Sounds like a task requiring Automation?!
+
 ## Automation to the Rescue
 To avoid this repetition at work, I came up with an utility that performs the necessary checks and steps without any human intervention
 and thus increases productivity by saving time wasted on the process of downloading/installing and setting up the infrastructure part.
@@ -39,14 +42,14 @@ Also, the code itself is well documented and can be easily understood. I have do
 further optimized accordingly.
 
 ## Tasks Made Easy (Infrastructure Perspective)
-- [x] Search the latest version of __`Tomcat Binary`__ on the Official Site.
+- [x] Search the latest version of __`Binary`__ on the Official Site.
 - [x] Download the latest version and save it to disk.
 - [x] Get the dependencies downloaded as well.
-   - Find the latest `JRE/JDK` version on the Official Site.
+   - Find the latest __`DEPENDENCY`__ version on the Official Site.
    - Download the same and save it to disk.
 - [x] Perform the extraction operation on the Downloaded Archived binaries.
-- [x] Place the extracted binaries to the appropriate locations.
-- [x] \(Optional) Create the Profile files for each of the extracted binaries.
+- [X] Have them Configured, Compiled and Installed on the system.
+- [x] Place the extracted binaries to the appropriate locations (part of the install process).
 
 ## Tasks Made Easy (Person's Point of View)
 - [x] No manual setup required.
