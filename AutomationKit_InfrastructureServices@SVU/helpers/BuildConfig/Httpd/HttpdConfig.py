@@ -77,7 +77,7 @@ INSTALL_TIME_OPTIONS = {'prefix_options': '--prefix=', 'enable_options': ' '.joi
 # Packages to check for before the build for `HTTPD` begins.
 # These packages would be required by `HTTPD` and its dependencies,
 # for compiling the source packages and installing their converted binaries.
-packages_to_validate = ['automake', 'autoconf', 'libtool', 'make', 'gcc', 'openssl', 'build-essential', 'zlib1g-dev']
+packages_to_validate = ['automake', 'autoconf', 'libtool', 'make', 'gcc', 'openssl']
 
 # Set the log location options, to store the Build Information
 # for the `HTTPD` source build (i.e., this is for the `CONFIGURE`, `MAKE` and `MAKE INSTALL` processes).
