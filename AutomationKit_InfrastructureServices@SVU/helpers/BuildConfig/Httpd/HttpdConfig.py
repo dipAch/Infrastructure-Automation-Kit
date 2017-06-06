@@ -74,7 +74,7 @@ ENABLE_OPTIONS_FLAGS = ['--enable-so', '--with-included-apr']
 # Compile and include the above list to a dictionary for better accessibility and management.
 INSTALL_TIME_OPTIONS = {'prefix_options': '--prefix=', 'enable_options': ' '.join(ENABLE_OPTIONS_FLAGS)}
 
-# Packages to check for before the build for `HTTPD` begins.
+# Generic Packages to check for before the build for `HTTPD` begins.
 # These packages would be required by `HTTPD` and its dependencies,
 # for compiling the source packages and installing their converted binaries.
 packages_to_validate = ['automake', 'autoconf', 'libtool', 'make', 'gcc', 'openssl']
