@@ -20,7 +20,7 @@ import helpers.BuildConfig.Tomcat.TomcatConfig
 
 # Import the Supervisor Script to Co-ordinate and control the Build Process flow.
 # Importing both, to test out the Generic Supervisor as well as the @SVU specific Supervisor.
-import helpers.SVUCustomBuildSupervisor, helpers.SVUCustomBuildSupervisor
+import helpers.BuildSupervisor, helpers.SVUCustomBuildSupervisor
 
 ###########################################################################################
 
@@ -28,5 +28,5 @@ import helpers.SVUCustomBuildSupervisor, helpers.SVUCustomBuildSupervisor
 
 # Initiate `TOMCAT` and its dependency (i.e., `JDK / JRE`) Download and Install.
 # Wait for the Magic to Happen!!!
-helpers.SVUCustomBuildSupervisor.SVUTomcatAutomate.__init__(helpers.BuildConfig.Tomcat.TomcatConfig.ENVIRONMENT)
-helpers.SVUCustomBuildSupervisor.SVUTomcatAutomate.initiate_build_workflow()
+helpers.BuildSupervisor.TomcatAutomate.__init__(helpers.BuildConfig.Tomcat.TomcatConfig.ENVIRONMENT)
+helpers.BuildSupervisor.TomcatAutomate.initiate_build_workflow()
